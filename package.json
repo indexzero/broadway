@@ -14,7 +14,7 @@
     "nconf": "0.3.x",
     "optimist": "0.2.x",
     "rimraf": "1.x.x",
-    "winston": "0.4.x"
+    "winston": "0.5.x"
   },
   "main": "./lib/broadway",
   "engines": { "node": ">= 0.4.0" }

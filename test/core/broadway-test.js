@@ -20,6 +20,7 @@ vows.describe('broadway/app').addBatch({
       assert.isObject(broadway.plugins);
       assert.isObject(broadway.plugins.log);
       assert.isObject(broadway.plugins.config);
+      assert.isObject(broadway.plugins.exceptions);
     }
   }
 }).export(module);

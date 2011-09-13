@@ -32,6 +32,9 @@ assert.plugins.has = {
       //
     }
   },
+  exceptions: function (app) {
+    
+  },
   log: function (app) {
     assert.isObject(app.log);
     
@@ -46,6 +49,9 @@ assert.plugins.has = {
 //
 assert.plugins.notHas = {
   config: function (app) {
+    
+  },
+  exceptions: function (app) {
     
   },
   log: function (app) {

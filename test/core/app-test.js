@@ -27,6 +27,7 @@ vows.describe('broadway/app').addBatch({
       //
       assert.isObject(app.plugins);
       assert.isObject(app.plugins.config);
+      assert.isObject(app.plugins.exceptions);
       assert.isObject(app.plugins.log);
       assert.isObject(app.initialized);
       assert.isFalse(!!app.initialized['core']);
@@ -45,6 +46,7 @@ vows.describe('broadway/app').addBatch({
       "should correctly setup the application state": function () {
         assert.isTrue(this.app.initialized['config']);
         assert.isTrue(this.app.initialized['core']);
+        assert.isTrue(this.app.initialized['exceptions']);
         assert.isTrue(this.app.initialized['log']);
         
         assert.plugins.has.config(this.app);

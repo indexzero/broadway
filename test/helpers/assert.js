@@ -33,7 +33,7 @@ assert.plugins.has = {
     }
   },
   log: function (app) {
-    assert.isObject(app.loggers);
+    assert.isObject(app.log);
     
     //
     // TODO: Assert winston.extend methods
@@ -49,7 +49,7 @@ assert.plugins.notHas = {
     
   },
   log: function (app) {
-    assert.isTrue(!app.loggers);
+    assert.isTrue(!app.log);
     //
     // TODO: Assert winston.extend methods
     //    

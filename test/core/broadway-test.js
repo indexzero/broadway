@@ -11,7 +11,7 @@ var assert = require('assert'),
     vows = require('vows'),
     broadway = require('../../lib/broadway');
     
-vows.describe('broadway/app').addBatch({
+vows.describe('broadway').addBatch({
   "The broadway module": {
     "should have the appropriate properties and methods defined": function () {
       assert.isFunction(broadway.App);

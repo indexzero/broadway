@@ -14,7 +14,7 @@
     "nconf": "0.3.x",
     "optimist": "0.2.x",
     "rimraf": "1.x.x",
-    "winston": "0.5.x"
+    "winston": "0.5.x >=0.5.2"
   },
   "devDependencies": {
     "vows": "0.5.x"

@@ -25,17 +25,16 @@ vows.describe('broadway/common/directories').addBatch({
       assert.isFunction(broadway.common.directories.create);
       assert.isFunction(broadway.common.directories.remove);
     },
-    "the normalize() method": {
-      "should correctly modify a set of directories": function () {
-        directories = broadway.common.directories.normalize(emptyAppDir, directories);
-        
-        Object.keys(directories).forEach(function (key) {
-          assert.isTrue(directories[key].indexOf(emptyAppDir) !== -1);
-        })
-      }
+    "the normalize() method should correctly modify a set of directories": function () {
+      directories = broadway.common.directories.normalize(emptyAppDir, directories);
+      
+      Object.keys(directories).forEach(function (key) {
+        assert.isTrue(directories[key].indexOf(emptyAppDir) !== -1);
+      });
     },
     "the create() method": {
       topic: function () {
+        console.dir(directories);
         broadway.common.directories.create(directories, this.callback);
       },
       "should create the specified directories": function (err, dirs) {

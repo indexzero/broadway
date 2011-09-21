@@ -12,14 +12,11 @@ var assert = require('assert'),
     vows = require('vows'),
     broadway = require('../../lib/broadway');
 
-var sampleAppPath = path.join(__dirname, '..', 'fixtures', 'sample-app'),
-    sampleAppFile = path.join(sampleAppPath, 'broadway.json'),
-    appConfig = JSON.parse(fs.readFileSync(sampleAppFile, 'utf8')),
-    directories = appConfig.directories;
-
-Object.keys(directories).forEach(function (key) {
-  directories[key] = directories[key].replace('#ROOT', sampleAppPath);
-});
+var fixturesDir   = path.join(__dirname, '..', 'fixtures'),
+    emptyAppDir   = path.join(fixturesDir, 'empty-app'),
+    emptyAppFile  = path.join(fixturesDir, 'sample-app.json'),
+    appConfig     = JSON.parse(fs.readFileSync(emptyAppFile, 'utf8')),
+    directories   = appConfig.directories;
 
 vows.describe('broadway/common/directories').addBatch({
   "When using broadway.common.directories": {
@@ -27,6 +24,15 @@ vows.describe('broadway/common/directories').addBatch({
       assert.isObject(broadway.common.directories);
       assert.isFunction(broadway.common.directories.create);
       assert.isFunction(broadway.common.directories.remove);
+    },
+    "the normalize() method": {
+      "should correctly modify a set of directories": function () {
+        directories = broadway.common.directories.normalize(emptyAppDir, directories);
+        
+        Object.keys(directories).forEach(function (key) {
+          assert.isTrue(directories[key].indexOf(emptyAppDir) !== -1);
+        })
+      }
     },
     "the create() method": {
       topic: function () {

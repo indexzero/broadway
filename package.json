@@ -11,7 +11,7 @@
     "async": "0.1.x",
     "eventemitter2": "0.4.x",
     "mkdirp": "0.x.x",
-    "nconf": "0.4.x",
+    "nconf": "0.4.x >=0.4.3",
     "nconf-redis": "0.2.x",
     "optimist": "0.2.x",
     "rimraf": "1.x.x",

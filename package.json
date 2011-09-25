@@ -12,6 +12,7 @@
     "eventemitter2": "0.4.x",
     "mkdirp": "0.x.x",
     "nconf": "0.4.x",
+    "nconf-redis": "0.2.x",
     "optimist": "0.2.x",
     "rimraf": "1.x.x",
     "winston": "0.5.x >=0.5.2"

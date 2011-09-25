@@ -34,7 +34,6 @@ vows.describe('broadway/common/directories').addBatch({
     },
     "the create() method": {
       topic: function () {
-        console.dir(directories);
         broadway.common.directories.create(directories, this.callback);
       },
       "should create the specified directories": function (err, dirs) {

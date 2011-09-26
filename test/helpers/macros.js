@@ -27,9 +27,9 @@ macros.shouldExtend = function (app, plugin, vows) {
   var context = {
     topic: function () {
       app = app || helpers.mockApp();
-      broadway.plugins[plugin].init(app, {}, this.callback)
+      broadway.plugins[plugin].init.call(app, {}, this.callback.bind(null, null, app))
     },
-    "should add the appropriate properties and methods": function (err, app) {
+    "should add the appropriate properties and methods": function (_, app, err) {
       assert.isTrue(!err);
       assert.plugins.has[plugin](app);
     }

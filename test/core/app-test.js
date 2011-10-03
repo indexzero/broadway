@@ -27,9 +27,9 @@ vows.describe('broadway/app').addBatch({
       //
       assert.isObject(app.plugins);
       assert.isObject(app.plugins.core);
-      assert.isObject(app.initialized);
-      assert.isFalse(!!app.initialized['all']);
-      assert.isFalse(!!app.initialized['core']);
+      assert.isObject(app.initializers);
+      assert.isFalse(!!app.initializers['all']);
+      assert.isTrue(app.initializers['core']);
       
       //
       // Methods
@@ -43,11 +43,11 @@ vows.describe('broadway/app').addBatch({
         app.init(this.callback);
       },
       "should correctly setup the application state": function () {
-        assert.isTrue(this.app.initialized['all']);
-        assert.isTrue(this.app.initialized['config']);
-        assert.isTrue(this.app.initialized['core']);
-        assert.isTrue(this.app.initialized['exceptions']);
-        assert.isTrue(this.app.initialized['log']);
+        assert.isTrue(this.app.initializers['all']);
+        assert.isTrue(this.app.initializers['config']);
+        assert.isTrue(this.app.initializers['core']);
+        assert.isTrue(this.app.initializers['exceptions']);
+        assert.isTrue(this.app.initializers['log']);
         
         assert.plugins.has.config(this.app);
         assert.plugins.has.log(this.app);

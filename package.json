@@ -1,8 +1,11 @@
 {
   "name": "broadway",
-  "description": "Lightweight feature reflection and module composition",
-  "version": "0.0.0",
-  "author": "Charlie Robbins <charlie.robbins@gmail.com>",
+  "description": "Lightweight application extensibility and composition with a twist of feature reflection.",
+  "version": "0.1.0",
+  "author": "Nodejitsu Inc. <info@nodejitsu.com>",
+  "contributors": [
+    { "name": "Charlie Robbins", "email": "charlie@nodejitsu.com" }
+  ],
   "repository": {
     "type": "git",
     "url": "http://github.com/flatiron/flatiron.git" 

@@ -57,7 +57,7 @@ var plugin = {
 
 ### App#on(event, callback) and App#emit(event, data)
 
-See (EventEmitter2)[2] documentation for more information.
+See [EventEmitter2][2] documentation for more information.
 
 ## Installation
 

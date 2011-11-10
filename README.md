@@ -26,7 +26,6 @@ app.hello("world");
 ### plugins/helloworld.js
 
 ```js
-
 // `exports.attach` gets called by broadway on `app.use`
 exports.attach = function (options) {
 
@@ -101,7 +100,14 @@ var plugin = {
 
 ### App#on(event, callback) and App#emit(event, data)
 
-See [EventEmitter2][2] documentation for more information.
+App inherits from [EventEmitter2][2], and many plugins build on this
+functionality.
+
+#### Built-In Events:
+
+* `error:init`: Broadway emits this event when it throws an error while attempting to initialize.
+
+Read the [EventEmitter2][2] documentation for more information.
 
 ## Tests
 All tests are written with [vows][0] and should be run with [npm][1]:

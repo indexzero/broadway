@@ -1,25 +1,71 @@
 # broadway 
 
-Lightweight application extensibility and composition with a twist of feature
-reflection.
+*Lightweight application extensibility and composition with a twist of feature
+reflection.*
+
+In other words: Broadway is a lightweight plugin system.
 
 ## Example
 
-```javascript
-var broadway = require('broadway');
+### app.js
+```js
+var broadway = require("broadway");
 
 var app = new broadway.App();
 
-// Attach some plugin to app
-app.use(require('./plugins').);
+// Passes the second argument to `helloworld.attach`.
+app.use(require("./plugins/helloworld"), { "delimiter": "!" } );
 
 app.init(function (err) {
+  if (err) {
+    throw err;
+  }
 });
+
+app.hello("world");
 ```
 
-## Motivation
+### plugins/helloworld.js
 
-Lorem ipsum
+```js
+
+// exports.attach gets called by broadway on app.use
+exports.attach = function (options) {
+
+  this.hello = function (world) {
+    console.log("Hello "+ world + options.delimiter || ".");
+  }
+
+};
+
+// exports.init gets called by broadway on `app.init`.
+exports.init = function (done) {
+
+  // This plugin doesn't require any initialization step.
+  return done();
+
+};
+```
+
+### run it!
+
+```bash
+josh@onix:~/dev/broadway/examples$ node simple/app.js 
+Hello world!
+josh@onix:~/dev/broadway/examples$ 
+```
+
+## Installation
+
+### Installing npm (node package manager)
+``` bash
+  $ curl http://npmjs.org/install.sh | sh
+```
+
+### Installing broadway
+``` bash 
+  $ [sudo] npm install broadway
+```
 
 ## API
 
@@ -58,18 +104,6 @@ var plugin = {
 ### App#on(event, callback) and App#emit(event, data)
 
 See [EventEmitter2][2] documentation for more information.
-
-## Installation
-
-### Installing npm (node package manager)
-``` bash
-  $ curl http://npmjs.org/install.sh | sh
-```
-
-### Installing broadway
-``` bash 
-  $ [sudo] npm install broadway
-```
 
 ## Tests
 All tests are written with [vows][0] and should be run with [npm][1]:

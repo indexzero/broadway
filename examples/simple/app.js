@@ -2,9 +2,8 @@ var broadway = require("broadway");
 
 var app = new broadway.App();
 
-var helloWorld = require("./plugins/helloworld");
-
-app.use(helloWorld, { "delimiter": "!" } );
+// Passes the second argument to `helloworld.attach`.
+app.use(require("./plugins/helloworld"), { "delimiter": "!" } );
 
 app.init(function (err) {
   if (err) {

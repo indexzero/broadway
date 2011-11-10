@@ -7,7 +7,7 @@ app.use(require("./plugins/helloworld"), { "delimiter": "!" } );
 
 app.init(function (err) {
   if (err) {
-    throw err;
+    console.log(err);
   }
 });
 

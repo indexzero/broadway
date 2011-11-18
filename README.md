@@ -1,4 +1,4 @@
-# broadway 
+# broadway [![Build Status](https://secure.travis-ci.org/flatiron/broadway.png)](http://travis-ci.org/flatiron/broadway)
 
 *Lightweight application extensibility and composition with a twist of feature
 reflection.*

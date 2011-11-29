@@ -27,10 +27,15 @@ macros.shouldExtend = function (app, plugin, vows) {
   var context = {
     topic: function () {
       app = app || helpers.mockApp();
-      broadway.plugins[plugin].attach.call(app, {});
-      return app;
+      broadway.plugins[plugin].attach.call(app, app.options[plugin] || {});
+      
+      if (broadway.plugins[plugin].init) {
+        return broadway.plugins[plugin].init.call(app, this.callback.bind(this, null, app));
+      }
+      
+      this.callback(null, app);
     },
-    "should add the appropriate properties and methods": function (app) {
+    "should add the appropriate properties and methods": function (_, app) {
       assert.plugins.has[plugin](app);
     }
   }

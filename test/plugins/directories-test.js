@@ -23,13 +23,6 @@ vows.describe('broadway/plugins/directories').addBatch({
     "extending an application": macros.shouldExtend(new broadway.App({
       root: emptyAppDir,
       directories: appConfig.directories
-    }), 'directories', {
-      "should set the appropriate config": function (app) {
-        assert.deepEqual(
-          app.config.get('directories'), 
-          broadway.common.directories.normalize(emptyAppDir, appConfig.directories)
-        );
-      }
-    })
+    }), 'directories', {})
   }
 }).export(module);

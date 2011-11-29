@@ -7,6 +7,8 @@
  */
  
 var assert = module.exports = require('assert'),
+    fs = require('fs'),
+    path = require('path'),
     nconf = require('nconf'),
     vows = require('vows');
 
@@ -36,7 +38,12 @@ assert.plugins.has = {
     
   },
   directories: function (app) {
-    assert.isTrue(!!app.config.get('directories'))
+    if (app.options['directories']) {
+      Object.keys(app.options['directories']).forEach(function (key) {
+        assert.isTrue(path.existsSync(app.options['directories'][key]));
+      });
+    }
+    //assert.isTrue(!!app.config.get('directories'))
   },
   log: function (app) {
     assert.isObject(app.log);
@@ -52,7 +59,7 @@ assert.plugins.has = {
 //
 assert.plugins.notHas = {
   config: function (app) {
-    
+    assert.isTrue(!app.config);
   },
   exceptions: function (app) {
     

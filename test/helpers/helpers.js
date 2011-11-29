@@ -18,5 +18,7 @@ helpers.findApp = function () {
 };
 
 helpers.mockApp = function () {
-  return new events.EventEmitter2({ delimiter: '::', wildcard: true });
-}
+  var mock = new events.EventEmitter2({ delimiter: '::', wildcard: true });
+  mock.options = {};
+  return mock;
+};

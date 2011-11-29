@@ -35,6 +35,9 @@ assert.plugins.has = {
   exceptions: function (app) {
     
   },
+  directories: function (app) {
+    assert.isTrue(!!app.config.get('directories'))
+  },
   log: function (app) {
     assert.isObject(app.log);
     
@@ -53,6 +56,9 @@ assert.plugins.notHas = {
   },
   exceptions: function (app) {
     
+  },
+  directories: function (app) {
+    assert.isTrue(!app.config.get('directories'))
   },
   log: function (app) {
     assert.isTrue(!app.log);

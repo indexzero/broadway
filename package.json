@@ -11,14 +11,14 @@
     "url": "http://github.com/flatiron/broadway.git" 
   },
   "dependencies": {
-    "eventemitter2": "0.4.x",
-    "nconf": "0.5.x",
-    "optimist": "0.2.x",
-    "winston": "0.5.x >=0.5.2",
-    "utile": "0.x.x"
+    "eventemitter2": "0.4.1",
+    "nconf": "0.5.0",
+    "optimist": "0.2.8",
+    "winston": "0.5.9",
+    "utile": "0.0.9"
   },
   "devDependencies": {
-    "vows": "0.5.x"
+    "vows": "0.6.0"
   },
   "scripts": {
     "test": "vows test/**/*-test.js --spec -i"

@@ -15,7 +15,7 @@
     "nconf": "0.5.0",
     "optimist": "0.2.8",
     "winston": "0.5.9",
-    "utile": "0.0.9"
+    "utile": "0.0.10"
   },
   "devDependencies": {
     "vows": "0.6.0"

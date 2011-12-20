@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <script type="text/javascript" src="broadway.js"></script>
+    <script type="text/javascript" src="plugins/helloworld.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      var app = new App();
+
+      app.use(HelloWorld, { "delimiter": "!" } );
+
+      app.init(function (err) {
+        if (err) console.log(err);
+      });
+
+      app.hello("world");
+    </script>
+  </body>
+</html>

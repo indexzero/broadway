@@ -44,6 +44,7 @@ surgeon
   .extract(
     'App.prototype.init',
     'App.prototype.use',
+    'App.prototype.remove',
     'App.prototype.inspect'
   )
   //

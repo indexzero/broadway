@@ -33,6 +33,8 @@ vows.describe('broadway/app').addBatch({
       // Methods
       //
       assert.isFunction(app.init);
+      assert.isFunction(app.use);
+      assert.isFunction(app.remove);
       assert.isFunction(app.inspect);
     },
     "the init() method": {
@@ -48,6 +50,25 @@ vows.describe('broadway/app').addBatch({
         
         assert.plugins.has.config(this.app);
         assert.plugins.has.log(this.app);
+      }
+    },
+    "the detach() method": {
+      topic: function (app) {
+        app.use({ 
+          name: "foo", 
+          attach: function () {
+            this.attached = true;
+          },
+          detach: function () {
+            this.detached = true;
+          }
+        });
+        app.remove("foo");
+        return app;
+      },
+      "should correctly remove a plugin": function (app) {
+        assert.isTrue(app.detached);
+        assert.equal(undefined, app.plugins["foo"]);
       }
     }
   }

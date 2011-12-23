@@ -43,12 +43,7 @@ macros.shouldExtend = function (app, plugin, vows) {
   return extendContext(context, vows);
 };
 
-macros.shouldLogEvent = function (app, event) {
-  if (arguments.length === 1) {
-    event = app;
-    app = null;
-  }
-  
+macros.shouldLogEvent = function (app, event, vow) {
   return {
     topic: function () {
       app = app || helpers.findApp.apply(null, arguments);
@@ -56,14 +51,9 @@ macros.shouldLogEvent = function (app, event) {
           
       this.event = event;
       app.once('broadway::logged', this.callback.bind(this, null));
-      app.emit(event.name, event.message, event.meta);
+      app.emit.apply(app, event);
     },
-    "should log the appropriate info": function (err, level, msg, meta) {
-      assert.equal(level, this.event.name.split('::').pop());
-      assert.equal(msg, this.event.message);
-      assert.equal(meta, this.event.meta);
-      assert.isTrue(true);
-    }
+    "should log the appropriate info": vow
   };
 };
 

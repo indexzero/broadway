@@ -4,14 +4,15 @@
   "author": "Nodejitsu Inc. <info@nodejitsu.com>",
   "version": "0.1.6",
   "contributors": [
-    { "name": "Charlie Robbins", "email": "charlie@nodejitsu.com" }
+    { "name": "Charlie Robbins", "email": "charlie@nodejitsu.com" },
+    { "name": "Paolo Fragomeni", "email": "paolo@nodejitsu.com" }
   ],
   "repository": {
     "type": "git",
     "url": "http://github.com/flatiron/broadway.git" 
   },
   "dependencies": {
-    "eventemitter2": "0.4.1",
+    "eventemitter2": "0.4.3",
     "nconf": "0.5.1",
     "optimist": "0.3.1",
     "winston": "0.5.9",

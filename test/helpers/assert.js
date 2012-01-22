@@ -99,3 +99,9 @@ assert.log.levelMsg = function (err, level, msg, meta) {
   assert.equal(level, this.event[1]);
   assert.equal(msg, this.event[2]);
 };
+
+assert.log.metaOnly = function (err, level, msg, meta) {
+  assert.equal(level, 'info');
+  assert.equal(msg, this.event[0]);
+  assert.equal(meta, this.event[1]);
+}

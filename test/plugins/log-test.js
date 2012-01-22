@@ -59,7 +59,11 @@ vows.describe('broadway/plugins/log').addBatch({
         'apps::start',
         'info', 
         { foo: 'bar' }, 
-      ], assert.log.levelMeta)
+      ], assert.log.levelMeta),
+      "meta only": macros.shouldLogEvent(app, [
+        'apps::start',
+        { foo: 'bar' }, 
+      ], assert.log.metaOnly)
     }
   }
 }).export(module);

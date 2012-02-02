@@ -29,7 +29,7 @@ vows.describe('broadway/app').addBatch({
           // purely async.
           process.nextTick(function () {
             self.letsGo = function () {
-              console.log('Let\'s go to '+self.place+'!');
+              return 'Let\'s go to '+self.place+'!';
             }
 
             cb();
@@ -60,7 +60,7 @@ vows.describe('broadway/app').addBatch({
       assert.isFunction(app.oneup);
       assert.isFunction(app.letsGo);
       assert.equal(2, app.oneup(1));
-      assert.equal(letsGo(), 'Let\'s go to rackspace!');
+      assert.equal(app.letsGo(), 'Let\'s go to rackspace!');
     },
   }
 }).export(module);

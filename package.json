@@ -12,8 +12,8 @@
     "url": "http://github.com/flatiron/broadway.git" 
   },
   "dependencies": {
-    "colors": "0.6.x",
-    "cliff": "0.1.5",
+    "colors": "0.6.0-1",
+    "cliff": "0.1.6",
     "eventemitter2": "0.4.3",
     "nconf": "0.5.1",
     "optimist": "0.3.1",

@@ -23,7 +23,7 @@
   "devDependencies": {
     "codesurgeon": "0.2.x",
     "uglify-js": "1.0.6",
-    "vows": "0.6.0"
+    "vows": "0.6.x"
   },
   "scripts": {
     "test": "vows test/**/*-test.js --spec -i"

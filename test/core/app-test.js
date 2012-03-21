@@ -44,7 +44,6 @@ vows.describe('broadway/app').addBatch({
       },
       "should correctly setup the application state": function () {
         assert.isTrue(this.app.initialized);
-        assert.isTrue(this.app.initializers['exceptions']);
         assert.isTrue(this.app.initializers['log']);
         
         assert.plugins.has.config(this.app);

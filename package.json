@@ -17,7 +17,7 @@
     "eventemitter2": "0.4.9",
     "nconf": "0.5.1",
     "optimist": "0.3.1",
-    "winston": "0.5.10",
+    "winston": "0.5.11",
     "utile": "0.0.10"
   },
   "devDependencies": {

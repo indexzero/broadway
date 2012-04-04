@@ -26,7 +26,7 @@
     "vows": "0.6.x"
   },
   "scripts": {
-    "test": "vows test/**/*-test.js --spec -i"
+    "test": "vows test/**/*-test.js --spec"
   },
   "main": "./lib/broadway",
   "engines": { "node": ">= 0.4.0" }

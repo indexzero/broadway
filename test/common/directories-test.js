@@ -26,7 +26,7 @@ vows.describe('broadway/common/directories').addBatch({
       assert.isFunction(broadway.common.directories.remove);
     },
     "the normalize() method should correctly modify a set of directories": function () {
-      directories = broadway.common.directories.normalize(emptyAppDir, directories);
+      directories = broadway.common.directories.normalize({'#ROOT': emptyAppDir}, directories);
       
       Object.keys(directories).forEach(function (key) {
         assert.isTrue(directories[key].indexOf(emptyAppDir) !== -1);

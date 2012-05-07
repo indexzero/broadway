@@ -3,9 +3,10 @@
   "description": "Lightweight application extensibility and composition with a twist of feature reflection.",
   "author": "Nodejitsu Inc. <info@nodejitsu.com>",
   "version": "0.1.15",
-  "contributors": [
-    { "name": "Charlie Robbins", "email": "charlie@nodejitsu.com" },
-    { "name": "Paolo Fragomeni", "email": "paolo@nodejitsu.com" }
+  "maintainers": [
+    "AvianFlu <avianflu@nodejitsu.com>",
+    "indexzero <charlie@nodejitsu.com>",
+    "Marak <marak@nodejitsu.com>"
   ],
   "repository": {
     "type": "git",
@@ -29,5 +30,8 @@
     "test": "vows test/**/*-test.js --spec"
   },
   "main": "./lib/broadway",
-  "engines": { "node": ">= 0.4.0" }
+  "engines": {
+    "node": ">= 0.4.0"
+  }
 }
+

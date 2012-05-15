@@ -88,7 +88,7 @@ var plugin = {
     // Called when plugin detached from application
     // (Only if plugin with same name was attached)
     // `this` - is a reference to application
-  }
+  },
 
   "init": function init(callback) {
     // Called on application initialization

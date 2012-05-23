@@ -72,6 +72,11 @@ vows.describe('broadway/app').addBatch({
       app.remove(three);
       app.use(three);
       
+      // Removing a plugin which was never added should not affect the initlist
+      app.remove({
+        name: 'foo'
+      });
+      
       app.init(function (err) {
         that.callback(err, app);
       });

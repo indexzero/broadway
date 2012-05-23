@@ -12,22 +12,26 @@ var events = require('eventemitter2'),
     broadway = require('../../lib/broadway');
     
 vows.describe('broadway/app').addBatch({
-  "An initialized instance of broadway.App with two plugins": {
+  "An initialized instance of broadway.App with three plugins": {
     topic: function () {
-      var app = new broadway.App();
+      var app = new broadway.App(),
+          that = this;
+
+      that.init = [];
 
       // First plugin. Includes an init step.
       app.use({
-        'attach': function () {
+        attach: function () {
           this.place = 'rackspace';
         },
 
-        'init': function (cb) {
+        init: function (cb) {
           var self = this;
 
           // a nextTick isn't technically necessary, but it does make this
           // purely async.
           process.nextTick(function () {
+            that.init.push('one');
             self.letsGo = function () {
               return 'Let\'s go to '+self.place+'!';
             }
@@ -39,11 +43,21 @@ vows.describe('broadway/app').addBatch({
 
       // Second plugin. Only involves an "attach".
       app.use({
-        'attach': function () {
+        attach: function () {
           this.oneup = function (n) {
             n++;
             return n;
           }
+        }
+      });
+      
+      // Third pluging. Only involves an "init".
+      app.use({
+        init: function (cb) {
+          process.nextTick(function () {
+            that.init.push('three');
+            cb();
+          })
         }
       });
 
@@ -61,6 +75,11 @@ vows.describe('broadway/app').addBatch({
       assert.isFunction(app.letsGo);
       assert.equal(2, app.oneup(1));
       assert.equal(app.letsGo(), 'Let\'s go to rackspace!');
+
+      //
+      // This is intentional. The second plugin does not invoke `init`.
+      //
+      assert.deepEqual(this.init, ['one', 'three']);
     },
   }
 }).export(module);

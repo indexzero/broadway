@@ -15,9 +15,20 @@ vows.describe('broadway/app').addBatch({
   "An initialized instance of broadway.App with three plugins": {
     topic: function () {
       var app = new broadway.App(),
-          that = this;
+          that = this,
+          three;
 
       that.init = [];
+
+      three = {
+        name: 'three',
+        init: function (cb) {
+          process.nextTick(function () {
+            that.init.push('three');
+            cb();
+          })
+        }
+      };
 
       // First plugin. Includes an init step.
       app.use({
@@ -52,16 +63,11 @@ vows.describe('broadway/app').addBatch({
       });
       
       // Third pluging. Only involves an "init".
-      app.use({
-        init: function (cb) {
-          process.nextTick(function () {
-            that.init.push('three');
-            cb();
-          })
-        }
-      });
+      app.use(three);
+      
+      // Attempt to use it again. This should not invoke `init()` twice
+      app.use(three);
 
-      var that = this;
       app.init(function (err) {
         that.callback(err, app);
       });

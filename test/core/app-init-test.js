@@ -68,6 +68,10 @@ vows.describe('broadway/app').addBatch({
       // Attempt to use it again. This should not invoke `init()` twice
       app.use(three);
 
+      // Remove the plugin and use it again. This should not invoke `init()` twice
+      app.remove(three);
+      app.use(three);
+      
       app.init(function (err) {
         that.callback(err, app);
       });

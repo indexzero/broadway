@@ -17,7 +17,6 @@
     "cliff": "0.1.7",
     "eventemitter2": "0.4.9",
     "nconf": "0.5.1",
-    "optimist": "0.3.4",
     "winston": "0.5.11",
     "utile": "0.1.0"
   },

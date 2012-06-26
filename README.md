@@ -31,7 +31,7 @@ exports.attach = function (options) {
 
   this.hello = function (world) {
     console.log("Hello "+ world + options.delimiter || ".");
-  }
+  };
 
 };
 

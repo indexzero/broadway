@@ -41,7 +41,7 @@ vows.describe('broadway/common/directories').addBatch({
         
         var exists = false;
         dirs.forEach(function (dir) {
-          exists = path.existsSync(dir);
+          exists = (fs.existsSync || path.existsSync)(dir);
         });
         
         assert.isTrue(exists);
@@ -55,7 +55,7 @@ vows.describe('broadway/common/directories').addBatch({
           
           var exists = true;
           dirs.forEach(function (dir) {
-            exists = path.existsSync(dir);
+            exists = (fs.existsSync || path.existsSync)(dir);
           });
           
           assert.isFalse(exists);

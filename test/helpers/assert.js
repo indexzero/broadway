@@ -40,7 +40,7 @@ assert.plugins.has = {
   directories: function (app) {
     if (app.options['directories']) {
       Object.keys(app.options['directories']).forEach(function (key) {
-        assert.isTrue(path.existsSync(app.options['directories'][key]));
+        assert.isTrue(fs.existsSync(app.options['directories'][key]));
       });
     }
     //assert.isTrue(!!app.config.get('directories'))

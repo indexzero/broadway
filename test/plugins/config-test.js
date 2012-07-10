@@ -1,5 +1,5 @@
 /*
- * log-test.js: Tests for the broadway config plugin
+ * config-test.js: Tests for the broadway config plugin
  *
  * (C) 2011, Nodejitsu Inc.
  * MIT LICENSE

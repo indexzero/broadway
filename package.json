@@ -15,7 +15,7 @@
   "dependencies": {
     "cliff": "0.1.8",
     "eventemitter2": "0.4.9",
-    "nconf": "0.6.3",
+    "nconf": "0.6.4",
     "winston": "0.6.2",
     "utile": "0.1.2"
   },

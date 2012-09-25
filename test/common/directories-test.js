@@ -39,12 +39,9 @@ vows.describe('broadway/common/directories').addBatch({
       "should create the specified directories": function (err, dirs) {
         assert.isTrue(!err);
         
-        var exists = false;
         dirs.forEach(function (dir) {
-          exists = (fs.existsSync || path.existsSync)(dir);
+          assert.isTrue((fs.existsSync || path.existsSync)(dir));
         });
-        
-        assert.isTrue(exists);
       },
       "the destroy() method": {
         topic: function () {
@@ -52,13 +49,10 @@ vows.describe('broadway/common/directories').addBatch({
         },
         "should remove the specified directories": function (err, dirs) {
           assert.isTrue(!err);
-          
-          var exists = true;
+
           dirs.forEach(function (dir) {
-            exists = (fs.existsSync || path.existsSync)(dir);
+            assert.isFalse((fs.existsSync || path.existsSync)(dir));
           });
-          
-          assert.isFalse(exists);
         }
       }
     }

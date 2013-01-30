@@ -86,12 +86,14 @@ assert.log.levelMsgMeta = function (err, level, msg, meta) {
 assert.log.msgMeta = function (err, level, msg, meta) {
   assert.equal(level, this.event[0].split('::')[1] || 'info');
   assert.equal(msg, this.event[1]);
-  assert.equal(meta, this.event[2]);
+  this.event[2].event = this.event[0];
+  assert.deepEqual(meta, this.event[2]);
 };
 
 assert.log.levelMeta = function (err, level, msg, meta) {
   assert.equal(level, this.event[1]);
   assert.equal(msg, this.event[0]);
+  this.event[2].event = this.event[0];
   assert.deepEqual(meta, this.event[2]);
 };
 
@@ -103,5 +105,6 @@ assert.log.levelMsg = function (err, level, msg, meta) {
 assert.log.metaOnly = function (err, level, msg, meta) {
   assert.equal(level, 'info');
   assert.equal(msg, this.event[0]);
-  assert.equal(meta, this.event[1]);
+  this.event[1].event = this.event[0];
+  assert.deepEqual(meta, this.event[1]);
 }

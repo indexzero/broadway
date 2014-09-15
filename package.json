@@ -13,7 +13,7 @@
     "url": "http://github.com/flatiron/broadway.git"
   },
   "dependencies": {
-    "cliff": "0.1.8",
+    "cliff": "0.1.9",
     "eventemitter2": "0.4.14",
     "nconf": "0.6.9",
     "winston": "0.8.0",

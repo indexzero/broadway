@@ -2,7 +2,7 @@
   "name": "broadway",
   "description": "Lightweight application extensibility and composition with a twist of feature reflection.",
   "author": "Nodejitsu Inc. <info@nodejitsu.com>",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "maintainers": [
     "AvianFlu <avianflu@nodejitsu.com>",
     "indexzero <charlie@nodejitsu.com>",

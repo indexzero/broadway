@@ -1,124 +1,118 @@
-# broadway [![Build Status](https://secure.travis-ci.org/flatiron/broadway.png)](http://travis-ci.org/flatiron/broadway)
+# broadway [![Build Status](https://secure.travis-ci.org/indexzero/broadway.png)](http://travis-ci.org/indexzero/broadway)
 
-*Lightweight application extensibility and composition with a twist of feature
-reflection.*
+_*Lightweight App extensibility and middleware customization.*_
 
-## Example
+## Usage
 
-### app.js
-```js
-var broadway = require("broadway");
+`broadway` is designed to be the littlest possible extensibility for server applications. It is does not take any other external dependencies besides those to expose basic "start middleware".
 
-var app = new broadway.App();
+Additional functionality may be added through `.mixin(base, redefine)`:
 
-// Passes the second argument to `helloworld.attach`.
-app.use(require("./plugins/helloworld"), { "delimiter": "!" } );
+``` js
+var express = require('express'),
+    App = require('broadway');
 
-app.init(function (err) {
-  if (err) {
-    console.log(err);
-  }
+//
+// Create a new base App.
+//
+var app = new App({ http: 8080 });
+
+//
+// Then mixin `express` functionality later on. This
+// can be called multiple times. By default: it will
+// only define a single property on your app once.
+//
+app.mixin(express());
+
+//
+// Do anything you want asynchronously before
+// the application starts.
+//
+app.preboot(function (app, options, next) {
+  console.log('Starting up...');
+  next();
 });
 
-app.hello("world");
-```
-
-### plugins/helloworld.js
-
-```js
-// `exports.attach` gets called by broadway on `app.use`
-exports.attach = function (options) {
-
-  this.hello = function (world) {
-    console.log("Hello "+ world + options.delimiter || ".");
-  };
-
-};
-
-// `exports.init` gets called by broadway on `app.init`.
-exports.init = function (done) {
-
-  // This plugin doesn't require any initialization step.
-  return done();
-
-};
-```
-
-### run it!
-
-```bash
-josh@onix:~/dev/broadway/examples$ node simple/app.js 
-Hello world!
-josh@onix:~/dev/broadway/examples$ 
-```
-
-## Installation
-
-### Installing npm (node package manager)
-``` bash
-  $ curl http://npmjs.org/install.sh | sh
-```
-
-### Installing broadway
-``` bash 
-  $ [sudo] npm install broadway
-```
-
-## API
-
-### App#init(callback)
-
-Initialize application and it's plugins, `callback` will be called with null or
-initialization error as first argument.
-
-### App#use(plugin, options)
-
-Attach plugin to application. `plugin` should conform to following interface:
-
-```javascript
-var plugin = {
-  "name": "example-plugin", // Plugin's name
-
-  "attach": function attach(options) {
-    // Called with plugin options once plugin attached to application
-    // `this` - is a reference to application
-  },
-
-  "detach": function detach() {
-    // Called when plugin detached from application
-    // (Only if plugin with same name was attached)
-    // `this` - is a reference to application
-  },
-
-  "init": function init(callback) {
-    // Called on application initialization
-    // App#init(callback) will be called once every plugin will call `callback`
-    // `this` - is a reference to application
+//
+// Start listening on HTTP port passed in to
+// App when it was created above.
+//
+app.start(function (err) {
+  if (err) {
+    console.error('Error on startup: %s', err.message);
+    return process.exit(1);
   }
-};
+
+  console.log('Listening over HTTP on port %s', this.options.http);
+});
 ```
 
-### App#on(event, callback) and App#emit(event, data)
+### "Hookable" middleware
 
-App inherits from [EventEmitter2][2], and many plugins build on this
-functionality.
+Because `broadway` exposes a generic hook mechanism from [understudy] it is possible to write hooks into your middleware easily. Consider the following example that defines hookable "auth" handlers into its existing authorization middleware:
 
-#### Built-In Events:
+``` js
+var express = require('express'),
+    basicAuth = require('basic-auth'),
+    App = require('broadway');
 
-* `error:init`: Broadway emits this event when it throws an error while attempting to initialize.
+//
+// Create an app with default http options,
+// mixin all express functions
+//
+var app = new App({ http: 8080 }, express());
 
-Read the [EventEmitter2][2] documentation for more information.
+//
+// Define a simple "auth" middleware that only
+// performs Basic Auth.
+//
+app.use(function auth(req, res, next) {
+  //
+  // Before checking and/or parsing the Basic Auth
+  // header allow others to attempt their auth methods.
+  //
+  app.perform('auth', req, res, function (done) {
+    var creds = basicAuth(req);
+
+    if (req.authed) {
+      return done();
+    }
+    else if (!creds || creds.name !== 'bob' || creds.pass !== 'secret') {
+      res.writeHead(401, { 'WWW-Authenticate': 'Basic realm="example"' });
+      res.end('Unauthorized\n');
+      return;
+    }
+
+    done();
+  }, next);
+});
+
+//
+// Hook into the new "auth middleware" defined above
+// to add support for the `X-AUTH-TOKEN` header.
+//
+app.before('auth', function (req, res, next) {
+  var bearerToken = req.headers['x-auth-token'];
+
+  if (bearerToken === 'golden-ticket') {
+    req.authed = true;
+  }
+
+  next();
+});
+
+// ... continue starting the app as usual.
+```
 
 ## Tests
-All tests are written with [vows][0] and should be run with [npm][1]:
+All tests are written with [mocha] and should be run with `npm`:
 
 ``` bash
   $ npm test
 ```
 
-#### [Charlie Robbins](http://nodejitsu.com)
+#### [Charlie Robbins](https://github.com/indexzero)
 #### License: MIT
 
-[0]: http://vowsjs.org
-[1]: http://npmjs.org
-[2]: https://github.com/hij1nx/EventEmitter2
+[mocha]: http://mochajs.org/
+[understudy]: https://github.com/bmeck/understudy

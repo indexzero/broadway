@@ -1,6 +1,6 @@
 # broadway [![Build Status](https://secure.travis-ci.org/indexzero/broadway.png)](http://travis-ci.org/indexzero/broadway)
 
-_*Lightweight App extensibility and middleware customization.*_
+_*Lightweight App extensibility and hookable middleware customization.*_
 
 ## Usage
 

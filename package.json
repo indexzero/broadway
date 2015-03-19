@@ -1,6 +1,6 @@
 {
   "name": "broadway",
-  "description": "Lightweight App extensibility and boot-flow.",
+  "description": "Lightweight App extensibility and middleware customization.",
   "author": "Charlie Robbins <charlie.robbins@gmail.com>",
   "version": "1.0.0",
   "repository": {

@@ -1,51 +1,75 @@
+'use strict';
+
 var createServers = require('create-servers'),
     mixin = require('merge-descriptors'),
     Understudy = require('understudy');
 
-var App = module.exports = function App(base, options) {
+/*
+ * function App(options?, [base])
+ * Creates a new App instance with the `options` supplied;
+ * will optionally mixin any properties on the `base` onto
+ * this instance.
+ *
+ */
+var App = module.exports = function App(options, base) {
   Understudy.call(this);
-
-  if (!options) {
-    options = base;
-    base = null;
-  }
-
+  this.options = options || {};
   if (base) {
-    mixin(this, base, false);
+    this.mixin(base);
   }
 };
 
-App.prototype.preboot = function (fn) {
+/*
+ * function preboot(fn)
+ * Adds the "start middleware" to this instance.
+ */
+App.prototype.preboot = function preboot(fn) {
   this.before('start', fn);
 };
 
-App.prototype.start = function (options, callback) {
+/*
+ * function mixin (ext, redine)
+ * Mixes in any properties in `ext`. If `redefine` is
+ * set to true, any properties on `ext` already existing
+ * on this instance will be redefined.
+ */
+App.prototype.mixin = function mixin_(ext, redefine) {
+  mixin(this, ext, redefine || false);
+};
+
+/*
+ * function start ([options], callback)
+ * Attempts to listen on HTTP(S) servers after
+ * executing all "start middlewares" defined by
+ *
+ *     app.preboot(function initFn(app, options, next) {
+ *       // Do startup things here.
+ *       next();
+ *     });
+ */
+App.prototype.start = function start(options, callback) {
   var self = this;
-  this.perform('start', this, options, function (next) {
-    self._listen(options, next);
+  if (!callback && typeof options === 'function') {
+    callback = options;
+    options = {};
+  }
+
+  mixin(this.options, options, true);
+  this.perform('start', this, this.options, function (next) {
+    self._listen(next);
   }, callback);
 };
 
-App.prototype._listen = function (options, callback) {
-  var self = this;
-  createServers({
-    http: options.http,
-    https: options.https,
-    //
-    // Remark: is not doing a `bind` a performance optimization
-    // from express?
-    //
-    // https://github.com/strongloop/express/blob/master/lib/express.js#L28
-    //
-    handler: this.handle.bind(this)
-  }, function (err, servers) {
-    if (err) { return callback(err) }
-    self.servers = servers;
-    callback();
-  });
-};
+/*
+ * function close (callback)
+ * Closes all HTTP(S) servers on the App,
+ * if they are defined.
+ */
+App.prototype.close = function close(callback) {
+  if (!this.servers) {
+    return callback();
+  }
 
-App.prototype.close = function (callback) {
   var servers = Object.keys(this.servers),
       closed = 0,
       self = this;
@@ -60,7 +84,35 @@ App.prototype.close = function (callback) {
     }
   }
 
-  servers.forEach(function (key) {
+  servers.forEach(function closeServer(key) {
     self.servers[key].close(onClosed);
+  });
+};
+
+/*
+ * function _listen (callback)
+ * Starts up an HTTP and/or HTTPS server depending
+ * on the respective options on this instance.
+ */
+App.prototype._listen = function _listen(callback) {
+  var self = this;
+  if (typeof this.handle !== 'function') {
+    callback(new Error('A handle function must be defined.'));
+  }
+
+  createServers({
+    http: this.options.http,
+    https: this.options.https,
+    //
+    // Remark: is not doing a `bind` a performance optimization
+    // from express?
+    //
+    // https://github.com/strongloop/express/blob/master/lib/express.js#L28
+    //
+    handler: this.handle.bind(this)
+  }, function onListen(err, servers) {
+    if (err) { return callback(err) }
+    self.servers = servers;
+    callback();
   });
 };

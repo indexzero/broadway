@@ -14,6 +14,7 @@ var createServers = require('create-servers'),
 var App = module.exports = function App(options, base) {
   Understudy.call(this);
   this.options = options || {};
+
   if (base) {
     this.mixin(base);
   }
@@ -111,7 +112,7 @@ App.prototype._listen = function _listen(callback) {
     //
     handler: this.handle.bind(this)
   }, function onListen(err, servers) {
-    if (err) { return callback(err) }
+    if (err) { return callback(err); }
     self.servers = servers;
     callback();
   });

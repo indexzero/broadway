@@ -21,9 +21,11 @@ app.use(function auth(req, res, next) {
   //
   app.perform('auth', req, res, function (done) {
     var creds = basicAuth(req);
+
     if (req.authed) {
       return done();
-    } else if (!creds || creds.name !== 'bob' || creds.pass !== 'secret') {
+    }
+    else if (!creds || creds.name !== 'bob' || creds.pass !== 'secret') {
       res.writeHead(401, { 'WWW-Authenticate': 'Basic realm="example"' });
       res.end('Unauthorized\n');
       return;
@@ -39,6 +41,7 @@ app.use(function auth(req, res, next) {
 //
 app.before('auth', function (req, res, next) {
   var bearerToken = req.headers['x-auth-token'];
+
   if (bearerToken === 'golden-ticket') {
     req.authed = true;
   }

@@ -28,7 +28,7 @@ app.preboot(function (app, options, next) {
 // Start listening on HTTP port passed in
 // explicitly at start-time below.
 //
-app.start({ http: 8080 }, function () {
+app.start({ http: 8080 }, function (err) {
   if (err) {
     console.error('Error on startup: %s', err.message);
     return process.exit(1);

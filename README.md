@@ -1,4 +1,6 @@
-# broadway [![Build Status](https://secure.travis-ci.org/indexzero/broadway.png)](http://travis-ci.org/indexzero/broadway)
+[![Tests](http://img.shields.io/travis/indexzero/broadway.svg?style=flat-square)](https://travis-ci.org/indexzero/broadway)[![Dependencies](https://img.shields.io/david/indexzero/broadway.svg?style=flat-square)](https://david-dm.org/indexzero/broadway)[![NPM](http://img.shields.io/npm/v/broadway.svg?style=flat-square)](http://browsenpm.org/package/broadway)
+
+# broadway
 
 _*Lightweight App extensibility and hookable middleware customization.*_
 

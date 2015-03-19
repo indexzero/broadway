@@ -9,9 +9,9 @@ var express = require('express'),
 var app = new App();
 
 //
-// Then mixin express functionality later on. This
-// can be called multiple times, but will only define
-// a single property once on your app.
+// Then mixin `express` functionality later on. This
+// can be called multiple times. By default: it will
+// only define a single property on your app once.
 //
 app.mixin(express());
 

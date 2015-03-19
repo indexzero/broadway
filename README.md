@@ -9,16 +9,20 @@ _*Lightweight App extensibility and middleware customization.*_
 Additional functionality may be added through `.mixin(base, redefine)`:
 
 ``` js
-'use strict';
-
 var express = require('express'),
     App = require('broadway');
 
 //
-// Create an app with default http options,
-// mixin all express functions
+// Create a new base App.
 //
-var app = new App({ http: 8080 }, express());
+var app = new App({ http: 8080 });
+
+//
+// Then mixin `express` functionality later on. This
+// can be called multiple times. By default: it will
+// only define a single property on your app once.
+//
+app.mixin(express());
 
 //
 // Do anything you want asynchronously before
@@ -47,9 +51,7 @@ app.start(function (err) {
 
 Because `broadway` exposes a generic hook mechanism from [understudy] it is possible to write hooks into your middleware easily. Consider the following example that defines hookable "auth" handlers into its existing authorization middleware:
 
-```
-'use strict';
-
+``` js
 var express = require('express'),
     basicAuth = require('basic-auth'),
     App = require('broadway');

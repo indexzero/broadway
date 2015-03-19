@@ -68,7 +68,7 @@ App.prototype.start = function start(options, callback) {
  */
 App.prototype.close = function close(callback) {
   if (!this.servers) {
-    return callback();
+    return callback(new Error('No servers to close.'));
   }
 
   var servers = Object.keys(this.servers),
@@ -98,7 +98,7 @@ App.prototype.close = function close(callback) {
 App.prototype._listen = function _listen(callback) {
   var self = this;
   if (typeof this.handle !== 'function') {
-    callback(new Error('A handle function must be defined.'));
+    return callback(new Error('A handle function must be defined.'));
   }
 
   createServers({

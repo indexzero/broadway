@@ -18,6 +18,16 @@ var App = module.exports = function App(options, base) {
   if (base) {
     this.mixin(base);
   }
+
+  //
+  // This is a simple internal shim for other config loaders
+  //
+  var self = this;
+  this.config = {
+    get: function (key) {
+      return self.options[key];
+    }
+  };
 };
 
 /*
@@ -109,8 +119,8 @@ App.prototype._listen = function _listen(callback) {
   }
 
   createServers({
-    http: this.options.http,
-    https: this.options.https,
+    http: this.config.get('http'),
+    https: this.config.get('https'),
     //
     // Remark: is not doing a `bind` a performance optimization
     // from express?

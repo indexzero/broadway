@@ -23,6 +23,8 @@ describe('broadway', function () {
     assert.ok(app.mixin);
     assert.ok(app.start);
     assert.ok(app.close);
+    assert.ok(app.config.get);
+    assert.ok(app.perform);
     assert.ok(app._listen);
   });
 
@@ -38,6 +40,11 @@ describe('broadway', function () {
 
       assert.equal(app.options.http, 8080);
       assert.equal(app.method, base.method);
+    });
+
+    it('should define a config shim', function () {
+      var app = new App({ http: 8080 });
+      assert.equal(app.config.get('http'), 8080);
     });
   });
 
@@ -86,9 +93,22 @@ describe('broadway', function () {
     });
 
     it('should error if `app.handle` is not defined', function (done) {
-      var app = new App({ http: 8081 });
+      var app = new App({ http: 8082 });
       app.start(function (err) {
         assert.equal(err.message, 'A handle function must be defined.');
+        done();
+      });
+    });
+
+    it('should error if a `.before("preboot")` errors', function (done) {
+      var app = new App({ http: 8090 });
+      app.before('preboot', function (app, options, callback) {
+        return callback(new Error('Bad preboot'));
+      });
+
+      app.start(function (err) {
+        assert.ok(err);
+        assert.equal(err.message, 'Bad preboot');
         done();
       });
     });

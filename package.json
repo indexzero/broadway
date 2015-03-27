@@ -1,6 +1,6 @@
 {
   "name": "broadway",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Lightweight App extensibility and hookable middleware customization.",
   "author": "Charlie Robbins <charlie.robbins@gmail.com>",
   "repository": {

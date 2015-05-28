@@ -102,13 +102,13 @@ describe('broadway', function () {
 
     it('should error if a `.before("preboot")` errors', function (done) {
       var app = new App({ http: 8090 });
-      app.before('preboot', function (app, options, callback) {
-        return callback(new Error('Bad preboot'));
+      app.before('setup', function (app, options, callback) {
+        return callback(new Error('Bad setup preboot'));
       });
 
       app.start(function (err) {
         assert.ok(err);
-        assert.equal(err.message, 'Bad preboot');
+        assert.equal(err.message, 'Bad setup preboot');
         done();
       });
     });

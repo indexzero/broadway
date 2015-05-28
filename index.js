@@ -67,15 +67,9 @@ App.prototype.start = function start(options, callback) {
 
   mixin(this.options, options, true);
 
-  this.perform('preboot', this, this.options, function (booted) {
-    booted();
-  }, function (err) {
-    if (err) { return callback(err); }
-
-    this.perform('start', this, this.options, function (next) {
-      self._listen(next);
-    }, callback);
-  });
+  this.perform('setup', this, this.options, function (done) {
+    this.perform('start', this, this.options, this._listen, done);
+  }, callback);
 };
 
 /*

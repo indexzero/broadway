@@ -67,9 +67,16 @@ App.prototype.start = function start(options, callback) {
 
   mixin(this.options, options, true);
 
-  this.perform('setup', this, this.options, function (done) {
-    this.perform('start', this, this.options, this._listen, done);
-  }, callback);
+  this.perform('setup', this, this.options, function (setup) {
+    //
+    // This is a no-op because we want all after "setup" hooks
+    // to complete before any "start" hooks
+    //
+    setup();
+  }, function (err) {
+    if (err) { return callback(err); }
+    this.perform('start', this, this.options, this._listen, callback);
+  });
 };
 
 /*

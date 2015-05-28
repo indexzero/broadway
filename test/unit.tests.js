@@ -16,6 +16,17 @@ function expressApp(port) {
   return new App(options, express());
 }
 
+/*
+ * Simple helper function which returns a function
+ * that pushes onto `steps` to ensure ordering
+ */
+function pushStep(steps, str) {
+  return function (app, opts, next) {
+    steps.push(str);
+    next();
+  };
+}
+
 describe('broadway', function () {
   it('should define the correct interface', function () {
     var app = new App();
@@ -109,6 +120,33 @@ describe('broadway', function () {
       app.start(function (err) {
         assert.ok(err);
         assert.equal(err.message, 'Bad setup preboot');
+        done();
+      });
+    });
+
+    it('{before}setup{after} THEN {before}start{after})', function (done) {
+      var app = new App();
+      var steps = [];
+
+      // Override this for testing purposes.
+      app._listen = function (callback) { callback(); };
+
+      app.before('setup', pushStep(steps, 'before setup'));
+      app.after('setup',  pushStep(steps, 'after setup'));
+      app.preboot(pushStep(steps, 'before start (preboot)'));
+      app.before('start', pushStep(steps, 'before start (explicit)'));
+      app.after('start', pushStep(steps, 'after start'));
+
+      app.start(function (err) {
+        assert.ok(!err);
+        assert.deepEqual(steps, [
+          'before setup',
+          'after setup',
+          'before start (preboot)',
+          'before start (explicit)',
+          'after start'
+        ]);
+
         done();
       });
     });

@@ -164,6 +164,23 @@ describe('broadway', function () {
       });
     });
 
+    it('should allow special hooks to be called before close if defined', function (done) {
+      var app = expressApp(8088);
+      var called = false;
+      app.before('close', function (app, options, next) {
+        called = true;
+        setImmediate(next);
+      });
+      app.start(function (err) {
+        assert.ok(!err);
+        app.close(function (err) {
+          assert.ok(!err);
+          assert.ok(called);
+          done();
+        });
+      });
+    });
+
     it('should close HTTP and HTTPS servers');
 
     it('should respnd with an error if a server fails', function (done) {

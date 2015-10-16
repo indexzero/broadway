@@ -89,23 +89,24 @@ App.prototype.close = function close(callback) {
     return callback(new Error('No servers to close.'));
   }
 
-  var servers = Object.keys(this.servers),
-      closed = 0,
-      self = this;
+  this.perform('close', this, this.options, function (next) {
+    var servers = Object.keys(this.servers),
+        closed = 0;
 
-  /*
-   * Invokes the callback once all the servers have
-   * closed.
-   */
-  function onClosed() {
-    if (++closed === servers.length) {
-      callback();
+    /*
+     * Invokes the callback once all the servers have
+     * closed.
+     */
+    function onClosed() {
+      if (++closed === servers.length) {
+        next();
+      }
     }
-  }
 
-  servers.forEach(function closeServer(key) {
-    self.servers[key].close(onClosed);
-  });
+    servers.forEach(function closeServer(key) {
+      this.servers[key].close(onClosed);
+    }, this);
+  }, callback);
 };
 
 /*

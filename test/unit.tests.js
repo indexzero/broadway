@@ -92,6 +92,16 @@ describe('broadway', function () {
       });
     });
 
+    it('should still successfully start with configured options when config function is overwritten', function (done) {
+      var app = expressApp(4444);
+      app.config = { get: function () {} };
+      app.start(function (err) {
+        assert.ok(!err);
+        assert(app.options.http, 4444);
+        done();
+      });
+    });
+
     it('should listen on any port provided', function (done) {
       var app = expressApp(8081);
 

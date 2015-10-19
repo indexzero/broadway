@@ -121,8 +121,8 @@ App.prototype._listen = function _listen(callback) {
   }
 
   createServers({
-    http: this.config.get('http'),
-    https: this.config.get('https'),
+    http: this.config.get('http') || this.options.http,
+    https: this.config.get('https') || this.options.https,
     //
     // Remark: is not doing a `bind` a performance optimization
     // from express?

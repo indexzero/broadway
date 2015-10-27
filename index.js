@@ -5,15 +5,15 @@ var createServers = require('create-servers'),
     Understudy = require('understudy');
 
 /*
- * function App(options?, [base])
- * Creates a new App instance with the `options` supplied;
+ * function App(given?, [base])
+ * Creates a new App instance with the `given` supplied;
  * will optionally mixin any properties on the `base` onto
  * this instance.
  *
  */
-var App = module.exports = function App(options, base) {
+var App = module.exports = function App(given, base) {
   Understudy.call(this);
-  this.options = options || {};
+  this.given = given || {};
 
   if (base) {
     this.mixin(base);
@@ -25,7 +25,7 @@ var App = module.exports = function App(options, base) {
   var self = this;
   this.config = {
     get: function (key) {
-      return self.options[key];
+      return self.given[key];
     }
   };
 };
@@ -65,9 +65,9 @@ App.prototype.start = function start(options, callback) {
     options = {};
   }
 
-  mixin(this.options, options, true);
+  mixin(this.given, options, true);
 
-  this.perform('setup', this, this.options, function (setup) {
+  this.perform('setup', this, this.given, function (setup) {
     //
     // This is a no-op because we want all after "setup" hooks
     // to complete before any "start" hooks
@@ -75,7 +75,7 @@ App.prototype.start = function start(options, callback) {
     setup();
   }, function (err) {
     if (err) { return callback(err); }
-    this.perform('start', this, this.options, this._listen, callback);
+    this.perform('start', this, this.given, this._listen, callback);
   });
 };
 
@@ -89,7 +89,7 @@ App.prototype.close = function close(callback) {
     return callback(new Error('No servers to close.'));
   }
 
-  this.perform('close', this, this.options, function (next) {
+  this.perform('close', this, this.given, function (next) {
     var servers = Object.keys(this.servers),
         closed = 0;
 
@@ -121,8 +121,8 @@ App.prototype._listen = function _listen(callback) {
   }
 
   createServers({
-    http: this.config.get('http') || this.options.http,
-    https: this.config.get('https') || this.options.https,
+    http: this.config.get('http') || this.given.http,
+    https: this.config.get('https') || this.given.https,
     //
     // Remark: is not doing a `bind` a performance optimization
     // from express?

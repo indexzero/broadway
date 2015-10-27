@@ -42,14 +42,14 @@ describe('broadway', function () {
   describe('new App(options?, [base])', function () {
     it('should accept only options', function () {
       var app = new App({ http: 8080 });
-      assert.equal(app.options.http, 8080);
+      assert.equal(app.given.http, 8080);
     });
 
     it('should accept options and a base', function () {
       var base = { method: function () { } },
           app = new App({ http: 8080 }, base);
 
-      assert.equal(app.options.http, 8080);
+      assert.equal(app.given.http, 8080);
       assert.equal(app.method, base.method);
     });
 
@@ -88,7 +88,7 @@ describe('broadway', function () {
 
       app.start({ http: 8080 }, function (err) {
         assert.ok(!err);
-        assert.equal(app.options.http, 8080);
+        assert.equal(app.given.http, 8080);
       });
     });
 
@@ -97,7 +97,7 @@ describe('broadway', function () {
       app.config = { get: function () {} };
       app.start(function (err) {
         assert.ok(!err);
-        assert(app.options.http, 4444);
+        assert(app.given.http, 4444);
         done();
       });
     });

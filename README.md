@@ -45,7 +45,7 @@ app.start(function (err) {
     return process.exit(1);
   }
 
-  console.log('Listening over HTTP on port %s', this.options.http);
+  console.log('Listening over HTTP on port %s', this.given.http);
 });
 ```
 

@@ -120,12 +120,14 @@ App.prototype._listen = function _listen(callback) {
     return callback(new Error('A handle function must be defined.'));
   }
 
-  var httpPort = typeof this.config.get('http') !== 'undefined' ? this.config.get('http') : this.given.http;
-  var httpsPort = typeof this.config.get('https') !== 'undefined' ? this.config.get('https') : this.given.https;
+  var ports = {
+    http: this.config.get('http'),
+    https: this.config.get('https')
+  };
 
   createServers({
-    http: httpPort,
-    https: httpsPort,
+    http: typeof ports.http !== 'undefined' ? ports.http : this.given.http,
+    https: typeof ports.https !== 'undefined' ? ports.https : this.given.https,
     //
     // Remark: is not doing a `bind` a performance optimization
     // from express?

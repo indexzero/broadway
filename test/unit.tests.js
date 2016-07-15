@@ -113,6 +113,18 @@ describe('broadway', function () {
       });
     });
 
+    it('should listen on port 0', function (done) {
+      var app = expressApp(0);
+
+      app.start(function (err) {
+        assert.ok(!err);
+        assert.ok(app.servers);
+        assert.ok(app.servers.http);
+        assert.equal(typeof app.servers.http.address().port, 'number');
+        done();
+      });
+    });
+
     it('should error if `app.handle` is not defined', function (done) {
       var app = new App({ http: 8082 });
       app.start(function (err) {

@@ -1,8 +1,6 @@
-'use strict';
-
 var createServers = require('create-servers'),
-    mixin = require('merge-descriptors'),
-    Understudy = require('understudy');
+  mixin = require('merge-descriptors'),
+  Understudy = require('understudy');
 
 /*
  * function App(given?, [base])
@@ -59,7 +57,6 @@ App.prototype.mixin = function mixin_(ext, redefine) {
  *     });
  */
 App.prototype.start = function start(options, callback) {
-  var self = this;
   if (!callback && typeof options === 'function') {
     callback = options;
     options = {};
@@ -91,15 +88,15 @@ App.prototype.close = function close(callback) {
 
   this.perform('close', this, this.given, function (next) {
     var servers = Object.keys(this.servers),
-        closed = 0;
+      closed = 0;
 
     /*
-     * Invokes the callback once all the servers have
-     * closed.
-     */
+      * Invokes the callback once all the servers have
+      * closed.
+      */
     function onClosed() {
       if (++closed === servers.length) {
-        next();
+        return void next();
       }
     }
 

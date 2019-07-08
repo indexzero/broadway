@@ -3,6 +3,7 @@
   "version": "3.1.1",
   "description": "Lightweight App extensibility and hookable middleware customization.",
   "author": "Charlie Robbins <charlie.robbins@gmail.com>",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "url": "http://github.com/flatiron/broadway.git",
     "type": "git"
@@ -13,22 +14,20 @@
   },
   "devDependencies": {
     "basic-auth": "^1.0.0",
-    "common-style": "~3.1.0",
+    "eslint-config-populist": "^4.2.0",
     "express": "^4.12.3",
-    "istanbul": "^0.3.8",
-    "mocha": "^2.2.1",
-    "mocha-istanbul": "^0.2.0"
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.1"
   },
   "dependencies": {
-    "create-servers": "^2.0.0",
+    "create-servers": "^3.0.1",
     "merge-descriptors": "^1.0.0",
     "understudy": "^4.0.0"
   },
   "scripts": {
     "mocha": "mocha -w -R spec",
-    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha",
-    "report": "istanbul report cobertura",
-    "pretest": "common index.js test/ examples/",
-    "test": "npm run cover && npm run report"
+    "cover": "nyc mocha",
+    "pretest": "eslint --fix index.js test/ examples/",
+    "test": "npm run cover"
   }
 }

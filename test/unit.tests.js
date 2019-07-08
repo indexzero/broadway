@@ -1,8 +1,6 @@
-'use strict';
-
 var assert = require('assert'),
-    express = require('express'),
-    App = require('../');
+  express = require('express'),
+  App = require('../');
 
 /*
  * Simple helper function that creates a basic
@@ -46,8 +44,8 @@ describe('broadway', function () {
     });
 
     it('should accept options and a base', function () {
-      var base = { method: function () { } },
-          app = new App({ http: 8080 }, base);
+      var base = { method: function () {} },
+        app = new App({ http: 8080 }, base);
 
       assert.equal(app.given.http, 8080);
       assert.equal(app.method, base.method);
@@ -98,7 +96,7 @@ describe('broadway', function () {
       app.start(function (err) {
         assert.ok(!err);
         assert(app.given.http, 4444);
-        done();
+        app.close(done);
       });
     });
 
@@ -109,7 +107,7 @@ describe('broadway', function () {
         assert.ok(!err);
         assert.ok(app.servers);
         assert.ok(app.servers.http);
-        done();
+        app.close(done);
       });
     });
 
@@ -121,7 +119,7 @@ describe('broadway', function () {
         assert.ok(app.servers);
         assert.ok(app.servers.http);
         assert.equal(typeof app.servers.http.address().port, 'number');
-        done();
+        app.close(done);
       });
     });
 
@@ -154,7 +152,7 @@ describe('broadway', function () {
       app._listen = function (callback) { callback(); };
 
       app.before('setup', pushStep(steps, 'before setup'));
-      app.after('setup',  pushStep(steps, 'after setup'));
+      app.after('setup', pushStep(steps, 'after setup'));
       app.preboot(pushStep(steps, 'before start (preboot)'));
       app.before('start', pushStep(steps, 'before start (explicit)'));
       app.after('start', pushStep(steps, 'after start'));

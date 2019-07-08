@@ -1,8 +1,6 @@
-'use strict';
-
 var express = require('express'),
-    basicAuth = require('basic-auth'),
-    App = require('../');
+  basicAuth = require('basic-auth'),
+  App = require('../');
 
 //
 // Create an app with default http options,
@@ -24,8 +22,7 @@ app.use(function auth(req, res, next) {
 
     if (req.authed) {
       return done();
-    }
-    else if (!creds || creds.name !== 'bob' || creds.pass !== 'secret') {
+    } else if (!creds || creds.name !== 'bob' || creds.pass !== 'secret') {
       res.writeHead(401, { 'WWW-Authenticate': 'Basic realm="example"' });
       res.end('Unauthorized\n');
       return;

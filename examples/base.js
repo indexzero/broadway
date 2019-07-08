@@ -1,7 +1,5 @@
-'use strict';
-
 var express = require('express'),
-    App = require('../');
+  App = require('../');
 
 //
 // Create an app with default http options,

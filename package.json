@@ -10,7 +10,7 @@
   },
   "main": "./lib",
   "engines": {
-    "node": ">= 0.10.30"
+    "node": ">= 8"
   },
   "devDependencies": {
     "basic-auth": "^1.0.0",

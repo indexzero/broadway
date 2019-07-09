@@ -1,6 +1,6 @@
 {
   "name": "broadway",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Lightweight App extensibility and hookable middleware customization.",
   "author": "Charlie Robbins <charlie.robbins@gmail.com>",
   "license": "SEE LICENSE IN LICENSE",

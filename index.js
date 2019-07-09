@@ -87,8 +87,8 @@ App.prototype.close = function close(callback) {
   }
 
   this.perform('close', this, this.given, function (next) {
-    var servers = Object.keys(this.servers),
-      closed = 0;
+    const servers = Object.values(this.servers).reduce((all, serverOrServers) => all.concat(serverOrServers), []);
+    let closed = 0;
 
     /*
       * Invokes the callback once all the servers have
@@ -100,9 +100,9 @@ App.prototype.close = function close(callback) {
       }
     }
 
-    servers.forEach(function closeServer(key) {
-      this.servers[key].close(onClosed);
-    }, this);
+    servers.forEach(function closeServer(server) {
+      server.close(onClosed);
+    });
   }, callback);
 };
 

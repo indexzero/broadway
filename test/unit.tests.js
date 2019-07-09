@@ -123,6 +123,16 @@ describe('broadway', function () {
       });
     });
 
+    it('supports multiple servers of the same type', done => {
+      const app = new App({ http: [8081, 8082] }, express());
+
+      app.start(err => {
+        assert.ok(!err);
+        assert.equal(app.servers.http.length, 2);
+        app.close(done);
+      });
+    });
+
     it('should error if `app.handle` is not defined', function (done) {
       var app = new App({ http: 8082 });
       app.start(function (err) {

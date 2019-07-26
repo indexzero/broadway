@@ -58,7 +58,7 @@ describe('broadway', function () {
   });
 
   describe('.preboot(fn)', function () {
-    it('should be called on an sync start', function () {
+    it('should be called on an sync start', function (done) {
       var app = expressApp(8082);
 
       // Override this for testing purposes.
@@ -73,12 +73,32 @@ describe('broadway', function () {
       app.start(function (err) {
         assert.ok(!err);
         assert.equal(count, 1);
+        done();
+      });
+    });
+
+    it('blocks server listeners if a preboot fails', function (done) {
+      var app = expressApp(8082);
+      var listenWasCalled = false;
+      app._listen = function (callback) {
+        listenWasCalled = true;
+        callback();
+      };
+
+      app.preboot(function (_, __, next) {
+        next(new Error('Something failed'));
+      });
+
+      app.start(function (err) {
+        assert.ok(err);
+        assert.equal(listenWasCalled, false);
+        done();
       });
     });
   });
 
   describe('.start([options], callback', function () {
-    it('should mixin any options provided', function () {
+    it('should mixin any options provided', function (done) {
       var app = new App();
 
       // Override this for testing purposes.
@@ -87,6 +107,7 @@ describe('broadway', function () {
       app.start({ http: 8080 }, function (err) {
         assert.ok(!err);
         assert.equal(app.given.http, 8080);
+        done();
       });
     });
 
